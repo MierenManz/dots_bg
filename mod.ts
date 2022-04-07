@@ -29,7 +29,7 @@ class Renderer {
     this.width = canvas.width;
     this.height = canvas.height;
     this.dots = new Array(options.dotCount ?? 50);
-    console.log(this.width, this.height);
+
     for (let i = 0; i < this.dots.length; i++) {
       const coord: [number, number] = [
         Math.random() * (this.width - 10) + 10 | 0,
@@ -101,3 +101,5 @@ class Renderer {
     }
   }
 }
+
+(globalThis as any).Renderer = Renderer;
