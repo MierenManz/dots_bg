@@ -25,7 +25,7 @@ class Renderer {
             ];
             this.ctx.fillRect(coord[0] - 3, coord[1] - 3, 3, 3);
             this.dots[i] = {
-                velocity: Math.random() / 4 + 0.05,
+                velocity: Math.random() / 4 + 0.1,
                 coordinates: coord,
                 angle: Math.random() * Math.PI * 2
             };
