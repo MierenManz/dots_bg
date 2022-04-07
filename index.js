@@ -76,9 +76,7 @@ class Renderer {
     }
 }
 async function main() {
-    const r = new Renderer(document.getElementById("background"), {
-        dotCount: 125
-    });
+    const r = new Renderer(document.getElementById("background"));
     while(true){
         const start = performance.now();
         r.tick();
