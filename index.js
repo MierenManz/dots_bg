@@ -22,10 +22,16 @@ class Renderer {
                 Math.random() * (this.height - 10) + 10 | 0, 
             ];
             this.ctx.fillRect(coord[0] - 3, coord[1] - 3, 3, 3);
+            const velocities = [
+                Math.random() / 4 + 0.075,
+                Math.random() / 4 + 0.075
+            ];
             this.dots[i] = {
-                velocity: Math.random() / 4 + 0.1,
-                coordinates: coord,
-                angle: Math.random() * Math.PI * 2
+                velocities: [
+                    Math.random() * 2 | 0 ? velocities[0] : -velocities[0],
+                    Math.random() * 2 | 0 ? velocities[1] : -velocities[1], 
+                ],
+                coordinates: coord
             };
         }
         this.ctx.lineWidth = 2;
@@ -55,15 +61,13 @@ class Renderer {
         for(let i = 0; i < this.dots.length; i++){
             const dot = this.dots[i];
             if (dot.coordinates[1] < 3 || dot.coordinates[1] > this.height - 3) {
-                dot.angle = -dot.angle;
+                dot.velocities[1] = -dot.velocities[1];
             }
             if (dot.coordinates[0] < 3 || dot.coordinates[0] > this.width - 3) {
-                dot.angle = Math.PI - dot.angle;
+                dot.velocities[0] = -dot.velocities[0];
             }
-            const distanceX = Math.cos(dot.angle) * dot.velocity;
-            const distanceY = Math.sin(dot.angle) * dot.velocity;
-            dot.coordinates[0] += distanceX;
-            dot.coordinates[1] += distanceY;
+            dot.coordinates[0] += dot.velocities[0];
+            dot.coordinates[1] += dot.velocities[1];
         }
     }
     drawDots() {
