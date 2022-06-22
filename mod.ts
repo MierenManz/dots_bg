@@ -1,9 +1,8 @@
 /// <reference lib="DOM"/>
 
 interface Dot {
-  velocity: number;
+  velocity: [number, number];
   coordinates: [number, number];
-  angle: number;
 }
 
 interface Options {
@@ -32,16 +31,22 @@ class Renderer {
 
     for (let i = 0; i < this.dots.length; i++) {
       const coord: [number, number] = [
-        Math.random() * (this.width - 10) + 10 | 0,
-        Math.random() * (this.height - 10) + 10 | 0,
+        Math.random() * (this.width - 50) + 50 | 0,
+        Math.random() * (this.height - 50) + 50 | 0,
       ];
 
       this.ctx.fillRect(coord[0] - 3, coord[1] - 3, 3, 3);
       this.dots[i] = {
-        velocity: Math.random() / 4 + 0.1,
+        velocity: [Math.random() / 4 + 0.1, Math.random() / 4 + 0.1],
         coordinates: coord,
-        angle: Math.random() * Math.PI * 2,
       };
+
+      if ((Math.random() * 2 | 0) === 0) {
+        this.dots[i].velocity[0] = -this.dots[i].velocity[0];
+      }
+      if ((Math.random() * 2 | 0) === 0) {
+        this.dots[i].velocity[1] = -this.dots[i].velocity[1];
+      }
     }
 
     this.ctx.lineWidth = 2;
@@ -80,17 +85,15 @@ class Renderer {
       const dot = this.dots[i];
 
       if (dot.coordinates[1] < 3 || dot.coordinates[1] > this.height - 3) {
-        dot.angle = -dot.angle;
+        dot.velocity[1] = -dot.velocity[1];
       }
 
       if (dot.coordinates[0] < 3 || dot.coordinates[0] > this.width - 3) {
-        dot.angle = Math.PI - dot.angle;
+        dot.velocity[0] = -dot.velocity[0];
       }
 
-      const distanceX = Math.cos(dot.angle) * dot.velocity;
-      const distanceY = Math.sin(dot.angle) * dot.velocity;
-      dot.coordinates[0] += distanceX;
-      dot.coordinates[1] += distanceY;
+      dot.coordinates[0] += dot.velocity[0];
+      dot.coordinates[1] += dot.velocity[1];
     }
   }
 
