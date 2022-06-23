@@ -36,7 +36,6 @@ class Renderer {
       ];
 
       this.ctx.fillRect(coord[0] - 3, coord[1] - 3, 3, 3);
-      const velocities = [Math.random() / 4 + 0.075, Math.random() / 4 + 0.075];
       this.dots[i] = {
         velocity: [Math.random() / 4 + 0.1, Math.random() / 4 + 0.1],
         coordinates: coord,

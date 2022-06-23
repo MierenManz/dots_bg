@@ -22,10 +22,6 @@ class Renderer {
                 Math.random() * (this.height - 50) + 50 | 0, 
             ];
             this.ctx.fillRect(coord[0] - 3, coord[1] - 3, 3, 3);
-            const velocities = [
-                Math.random() / 4 + 0.075,
-                Math.random() / 4 + 0.075
-            ];
             this.dots[i] = {
                 velocity: [
                     Math.random() / 4 + 0.1,
