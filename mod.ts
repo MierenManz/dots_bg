@@ -1,7 +1,7 @@
 /// <reference lib="DOM"/>
 
 interface Dot {
-  velocities: [number, number];
+  velocity: [number, number];
   coordinates: [number, number];
 }
 
@@ -31,19 +31,23 @@ class Renderer {
 
     for (let i = 0; i < this.dots.length; i++) {
       const coord: [number, number] = [
-        Math.random() * (this.width - 10) + 10 | 0,
-        Math.random() * (this.height - 10) + 10 | 0,
+        Math.random() * (this.width - 50) + 50 | 0,
+        Math.random() * (this.height - 50) + 50 | 0,
       ];
 
       this.ctx.fillRect(coord[0] - 3, coord[1] - 3, 3, 3);
       const velocities = [Math.random() / 4 + 0.075, Math.random() / 4 + 0.075];
       this.dots[i] = {
-        velocities: [
-          (Math.random() * 2 | 0) ? velocities[0] : -velocities[0],
-          (Math.random() * 2 | 0) ? velocities[1] : -velocities[1],
-        ],
+        velocity: [Math.random() / 4 + 0.1, Math.random() / 4 + 0.1],
         coordinates: coord,
       };
+
+      if ((Math.random() * 2 | 0) === 0) {
+        this.dots[i].velocity[0] = -this.dots[i].velocity[0];
+      }
+      if ((Math.random() * 2 | 0) === 0) {
+        this.dots[i].velocity[1] = -this.dots[i].velocity[1];
+      }
     }
 
     this.ctx.lineWidth = 2;
@@ -82,15 +86,15 @@ class Renderer {
       const dot = this.dots[i];
 
       if (dot.coordinates[1] < 3 || dot.coordinates[1] > this.height - 3) {
-        dot.velocities[1] = -dot.velocities[1];
+        dot.velocity[1] = -dot.velocity[1];
       }
 
       if (dot.coordinates[0] < 3 || dot.coordinates[0] > this.width - 3) {
-        dot.velocities[0] = -dot.velocities[0];
+        dot.velocity[0] = -dot.velocity[0];
       }
 
-      dot.coordinates[0] += dot.velocities[0];
-      dot.coordinates[1] += dot.velocities[1];
+      dot.coordinates[0] += dot.velocity[0];
+      dot.coordinates[1] += dot.velocity[1];
     }
   }
 
